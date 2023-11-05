@@ -1,0 +1,81 @@
+<div
+  #modal
+  class="modal fade"
+  id="{{ modal_name }}"
+  data-backdrop="static"
+  data-keyboard="false"
+  [attr.aria-labelledby]="modal_name + 'Label'"
+  aria-hidden="true"
+  role="dialog"
+  >
+<div
+#popupElement
+class="popup"
+ModalDraggable
+>
+  <div
+    class="modal-dialog"
+    [class]="size"
+    role="document"
+  >
+    <!-- (mousedown)="onMouseDown($event)" -->
+    <!-- [style.left.%]="left" 
+    [style.top.%]="top"  -->
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="{{ modal_name + 'Label' }}">
+          {{ headerName }}
+        </h5>
+        <button
+          #close_btn_confirm
+          type="button"
+          class="btn-close btn-toggle-modal"
+          aria-label="Close"
+          (click)="close_modal($event)"
+        ></button>
+        <button
+          #close_btn
+          data-dismiss="modal"
+          aria-label="Close"
+          [attr.data-toggle]="'#' + modal_name"
+          type="button"
+          style="display: none"
+        ></button>
+      </div>
+      <div class="modal-body" style="max-height: 550px; overflow: auto">
+        <ng-content [select]="'myComponent'"></ng-content>
+      </div>
+      <div class="modal-footer" *ngIf="showFooter">
+        <button
+          *ngIf="action_name !== 'None'"
+          #save_btn
+          type="button"
+          style="font-size: 14px !important"
+          class="btn btn-success mx-3 px-4 py-2"
+          (click)="save_action()"
+          [disabled]="disabled"
+        >
+          {{ action_name }}
+        </button>
+        <button
+          type="button"
+          style="font-size: 14px !important"
+          data-dismiss="modal"
+          class="btn btn-secondary mx-3 px-4 py-2 btn-toggle-modal"
+          (click)="close_modal($event)"
+        >
+          {{ cancel_name }}
+        </button>
+      </div>
+    </div>
+  </div> 
+  </div>
+</div>
+<button
+  #open_btn
+  data-toggle="modal"
+  [attr.data-target]="'#' + modal_name"
+  type="button"
+  style="display: none"
+></button>

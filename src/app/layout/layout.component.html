@@ -1,0 +1,8 @@
+<div class="main-layot" [style.direction]="lang == 'ar' ? 'rtl' : 'ltr'">
+    <app-sidebar [isShowSide]="isShowSide" [pageName]="page"></app-sidebar>
+    <app-header
+      (toggle_sidebar)="toggle_sidebar()"
+      [pageName]="page"
+    ></app-header>
+   <app-layout [isShowSide]="isShowSide" [lang]="lang"></app-layout>
+</div>

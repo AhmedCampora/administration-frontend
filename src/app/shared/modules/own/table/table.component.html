@@ -1,0 +1,241 @@
+<div
+  class="shared-table-width"
+  style="margin: 0.4rem 0.3rem; position: relative"
+  [style.min-height.px]="height"
+>
+  <p-table
+    #id
+    class="table table-hover"
+    id="{{ id }}"
+    [value]="data"
+    [columns]="selectedColumns"
+    sortMode="multiple"
+    [scrollable]="true"
+    styleClass="p-datatable-sm p-datatable-gridlines"
+    [loading]="loading"
+    selectionMode="single"
+    [paginator]="false"
+    [globalFilterFields]="cols"
+    responsiveLayout="scroll"
+    [resizableColumns]="true"
+    [scrollHeight]="height + 'px'"
+  >
+    <!-- Start Caption Bar -->
+    <ng-template pTemplate="caption">
+      <div class="header-container">
+        <div class="left-divs">
+          <div class="hader-mul-sel left">
+            <p-multiSelect
+              class="multicol"
+              [options]="cols"
+              [(ngModel)]="selectedColumns"
+              optionLabel="header"
+              appendTo="body"
+              [selectedItemsLabel]="selectedItemsLabel"
+            ></p-multiSelect>
+          </div>
+          <div class="hader-search left" *ngIf="searchKeyword">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                #inVal
+                (input)="id.filterGlobal(inVal.value, 'contains')"
+                [placeholder]="search_placeholder"
+              />
+            </span>
+          </div>
+        </div>
+        <div  class="right-divs">
+          <div *ngIf="show_add">
+            <button class="btn btn-primary" (click)="btn_clicked('Add', {})">
+              {{ lang == 'ar' ? show_add.ar : show_add.en }}
+            </button>
+          </div>
+          <div *ngIf="show_export">
+            <button class="btn btn-primary" (click)="btn_clicked('Export', {})">
+              Export
+              <i class="fa-solid fa-file-export"></i>
+            </button>
+          </div>
+          <div *ngIf="show_print_all">
+            <button
+              class="btn btn-primary"
+              (click)="btn_clicked('Print all', data)"
+            >
+              Print All <i class="fa-solid fa-print"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <!-- End Caption Bar -->
+
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <ng-container *ngIf="selectedColumns.length > 0 && data.length > 0">
+          <th
+            pFrozenColumn
+            *ngIf="
+              show_edit ||
+              show_view ||
+              show_history ||
+              show_delete ||
+              show_print
+            "
+            rowspan="2"
+          ></th>
+        </ng-container>
+        <!-- [rowSpan]="+show_edit + +show_view + +show_delete + +show_print" -->
+        <th *ngFor="let col of columns" pSortableColumn="{{ col.field }}">
+          <div class="p-d-flex p-jc-between p-ai-center">
+            {{ col.header }}
+            <p-sortIcon field="{{ col.field }}"></p-sortIcon>
+          </div>
+        </th>
+      </tr>
+
+      <tr>
+        <th *ngFor="let col of columns">
+          <p-columnFilter type="text" field="{{ col.field }}"></p-columnFilter>
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template
+      pTemplate="body"
+      let-rowData
+      let-columns="columns"
+      let-rowIndex="rowIndex"
+    >
+      <tr
+        (click)="btn_clicked('Row', rowData)"
+        (click)="selected = rowData"
+        [ngStyle]="{ background: selected == rowData ? '#5c525242' : '' }"
+      >
+        <ng-container *ngIf="selectedColumns.length > 0 && data.length > 0">
+          <td
+          [pReorderableRow]="rowIndex"
+            [style.width.px]="
+              (+show_edit +
+                +show_view +
+                +show_reorder +
+                +show_history +
+                +show_delete +
+                +show_print) *
+              10
+            "
+            class="td-icons"
+            pFrozenColumn
+            *ngIf="
+              show_edit ||
+              show_view ||
+              show_history ||
+              show_delete ||
+              show_print || show_reorder
+            "
+          >
+            <span *ngIf="show_reorder">
+              <!-- <span style="
+                width: 20px;
+    height: 20px;
+    display: inline-block;"> -->
+              <i
+                class="fa fa-arrow-up"
+                [style]="rowIndex == 0 ? 'pointer-events:none; opacity:0.5;' : ''"
+                (click)="btn_clicked('Reorder', {
+                  value:rowData, ind:rowIndex, type:'up'
+                }); $event.stopPropagation()"
+              ></i>
+
+              <i
+              [style]="rowIndex == data.length - 1 ? 'pointer-events:none;opacity:0.5;' : ''"
+                class="fa fa-arrow-down"
+                (click)="btn_clicked('Reorder', {
+                  value:rowData, ind:rowIndex, type:'down'
+                }); $event.stopPropagation()"
+              ></i>
+
+            </span>
+            <span *ngIf="show_edit">
+              <i
+                class="fa-solid fa-pen yellow"
+                (click)="btn_clicked('Edit', rowData); $event.stopPropagation()"
+              ></i>
+            </span>
+
+            <span *ngIf="show_delete">
+              <i
+                class="fa-solid fa-trash-can danger"
+                (click)="btn_clicked('Delete', rowData); $event.stopPropagation()"
+              ></i>
+            </span>
+            <span *ngIf="show_view">
+              <i
+                class="fa-solid fa-eye yellow"
+                (click)="btn_clicked('View', rowData); $event.stopPropagation()"
+              ></i>
+            </span>
+            <span *ngIf="show_history">
+              <i
+                class="fa-solid fa-clock-rotate-left blue"
+                (click)="btn_clicked('History', rowData); $event.stopPropagation()"
+              ></i>
+            </span>
+            <span *ngIf="show_print">
+              <i
+                class="fa-solid fa-print gray"
+                (click)="btn_clicked('Print', rowData); $event.stopPropagation()"
+              ></i>
+            </span>
+          </td>
+        </ng-container>
+        <td *ngFor="let col of columns">
+          <ng-container *ngIf="!col.checkbox; else checkBox">
+            <span>{{ rowData[col.field] }} </span>
+          </ng-container>
+          <ng-template #checkBox>
+            <span>
+              <input
+                *ngIf="rowData[col.field] == 1"
+                type="checkbox"
+                [checked]="true"
+                [value]=""
+                (click)="enableCheckboxes && toggleValue(rowIndex, col.field)"
+                class="column-checkbox"
+              />
+              <span *ngIf="rowData[col.field] == 1" style="margin: 0 10px;">{{ rowData[col.anthoerData] }} </span>
+              <input
+                *ngIf="rowData[col.field] == 0"
+                type="checkbox"
+                [checked]="false"
+                [value]=""
+                (click)="enableCheckboxes && toggleValue(rowIndex, col.field)"
+                class="column-checkbox"
+              />
+            </span>
+          </ng-template>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td [colSpan]="selectedColumns.length + 1">
+          <h6 class="emptymessage">{{ emptymessage }}</h6>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <p-paginator
+    *ngIf="paginator"
+    [rows]="50"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="paginatorObj['rowsPerPageOptions']"
+    (onPageChange)="btn_clicked('Paginate', $event)"
+    [currentPageReportTemplate]="paginatorObj['currentPageReportTemplate']"
+    [showCurrentPageReport]="paginatorObj['showCurrentPageReport']"
+    [showFirstLastIcon]="paginatorObj['showFirstLastIcon']"
+  ></p-paginator>
+</div>

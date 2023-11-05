@@ -1,0 +1,20 @@
+.app-layout {
+    // height: calc(100vh - 50px);
+    //background-color: rgb(141, 239, 243);
+    overflow: auto;
+    transition: 0.8s;
+}
+
+.sidebar-open{
+
+    &.ar{
+        margin-right:130px;
+    }
+    &.en{
+        margin-left:130px;
+    }
+}
+
+.sidebar-close{
+    margin-left:0;
+}

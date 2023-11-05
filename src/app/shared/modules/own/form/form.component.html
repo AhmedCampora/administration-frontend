@@ -1,0 +1,183 @@
+<!-- incident_form.get(input_form.name)?.disabled && -->
+<button
+  type="button"
+  style="display: block"
+  class="btn btn-primary"
+  (click)="printForm()"
+  *ngIf="showPrintBtn"
+>
+  Print Form
+</button>
+<div class="form-container">
+  <div *ngIf="overlaySkeleton" class="skeleton"></div>
+  <form [formGroup]="form">
+    <multi-select-for-fields
+      [advancedSearch]="advancedSearch"
+      [cols]="cols"
+      [lang]="lang"
+      [selectedFields]="selectedFields"
+      [translate]="translate"
+    ></multi-select-for-fields>
+    <!-- <div class="btns-action">
+      <ng-content [select]="'addtionalButtons'"></ng-content>
+    </div> -->
+
+    <div class="custom-grid">
+      <ng-container *ngFor="let input_form of cols; let index = index">
+        <div
+          *ngIf="!input_form.hidden"
+          [ngStyle]="{
+            color: input_form.status == 'readonly' ? '#655c5c5c' : 'black'
+          }"
+          class="flex"
+        >
+          <ng-container
+            *ngIf="input_form.status == 'span'; else notSpanMaybeHidden"
+          >
+            <span-field
+              [labelWidth]="labelWidth"
+              [input_form]="input_form"
+              [control]="form.get(input_form.name)"
+            ></span-field>
+          </ng-container>
+
+          <ng-template #notSpanMaybeHidden>
+            <ng-container *ngIf="!input_form.hidden">
+              <ng-container [ngSwitch]="input_form.type">
+                <input-text-field
+                  *ngSwitchCase="'text'"
+                  [labelWidth]="labelWidth"
+                  (searchByInputEmitter)="searchByInput($event)"
+                  [input_form]="input_form"
+                  [control]="form.get(input_form.name)"
+                ></input-text-field>
+                <input-number-field
+                  *ngSwitchCase="'number'"
+                  [labelWidth]="labelWidth"
+                  [input_form]="input_form"
+                  (searchByInputEmitter)="searchByInput($event)"
+                  [control]="form.get(input_form.name)"
+                  [maxLength]="input_form?.maxLength"
+                ></input-number-field>
+                <input-password-field
+                  *ngSwitchCase="'password'"
+                  [labelWidth]="labelWidth"
+                  [input_form]="input_form"
+                  [control]="form.get(input_form.name)"
+                ></input-password-field>
+                <textarea-field
+                  *ngSwitchCase="'textarea'"
+                  [labelWidth]="labelWidth"
+                  [input_form]="input_form"
+                  [control]="form.get(input_form.name)"
+                ></textarea-field>
+                <date-field
+                  *ngSwitchCase="'date'"
+                  [labelWidth]="labelWidth"
+                  [input_form]="input_form"
+                  [control]="form.get(input_form.name)"
+                ></date-field>
+                <ng-container *ngSwitchCase="'dropdown'">
+                  <ng-container *ngIf="!input_form.isDropDown?.multi else MultiSelect" >
+                    <dropdown-field
+                      (changeSelectEmitter)="changeSelect($event)"
+                      (clearSelectEmitter)="clearSelect($event)"
+                      [labelWidth]="labelWidth"
+                      [lang]="lang"
+                      [input_form]="input_form"
+                      [control]="form.get(input_form.name)"
+                  ></dropdown-field>
+                  </ng-container>
+                </ng-container>
+                <ng-template #MultiSelect>
+                  <multi-select-field
+                  id="multi-select-field"
+                  (changeMultiSelectEmitter)="changeMultiSelect($event)"
+                  (clearMultiSelectEmitter)="clearMultiSelect($event)"
+                  [labelWidth]="labelWidth"
+                  [lang]="lang"
+                  [input_form]="input_form"
+                  [control]="form.get(input_form.name)"
+                  />
+                </ng-template>
+                <check-box-field
+                  *ngSwitchCase="'checkbox'"
+                  (checkMilestoneEmitter)="checkMilestone($event, index)"
+                  [labelWidth]="labelWidth"
+                  [input_form]="input_form"
+                  [control]="form.get(input_form.name)"
+                ></check-box-field>
+                <input-time-field
+                  *ngSwitchCase="'time'"
+                  [labelWidth]="labelWidth"
+                  [input_form]="input_form"
+                  [control]="form.get(input_form.name)"
+                ></input-time-field>
+                <ng-container *ngSwitchCaseDefault>
+                  <p>Unknown column type: {{ input_form.type }}</p>
+                </ng-container>
+              </ng-container>
+              <invalid-form-control [input_form]="input_form" [control]="form.get(input_form.name)" />
+            </ng-container>
+          </ng-template>
+        </div>
+      </ng-container>
+    </div>
+    <div class="btns-action">
+      <div class="addtionalButtons">
+        <ng-content [select]="'addtionalButtons'"></ng-content>
+      </div>
+      <button
+        *ngIf="action != 'none'"
+        type="button"
+        class="btn btn-success"
+        (click)="get_event_data()"
+        [disabled]="invalidForm"
+      >
+        <span>
+          {{ action_string }}
+        </span>
+      </button>
+      <button
+        *ngIf="other"
+        type="button"
+        class="btn btn-primary"
+        (click)="otherClicked()"
+      >
+        <span>
+          {{ lang == "ar" ? other.ar : other.en }}
+        </span>
+      </button>
+      <button
+        *ngIf="reset"
+        type="button"
+        class="btn btn-secondary"
+        (click)="reset_form()"
+      >
+        <span>
+          {{ reset_string }}
+        </span>
+      </button>
+      <button
+        *ngIf="cancel"
+        type="button"
+        class="btn btn-danger"
+        (click)="cancel_operation($event)"
+      >
+        <span>
+          {{ cancel_string }}
+        </span>
+      </button>
+    </div>
+    <div
+      *ngIf="form?.invalid && form?.errors && (form?.dirty || form?.touched)"
+      class="w-100 text-danger req-span"
+    >
+      <ul>
+        <li *ngFor="let item of form?.errors | keyvalue">
+          {{ item.value }}
+        </li>
+      </ul>
+    </div>
+  </form>
+</div>

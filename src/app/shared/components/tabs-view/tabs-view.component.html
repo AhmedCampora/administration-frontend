@@ -1,0 +1,9 @@
+<div class="card">
+    <p-tabView [(activeIndex)]="activeIndex" (activeIndexChange)="tabChanged($event)">
+      <ng-container *ngFor="let tab of tabs">
+        <p-tabPanel [header]="tab['header']">
+          <ng-container *ngComponentOutlet="tab.component"></ng-container>
+        </p-tabPanel>
+      </ng-container>
+    </p-tabView>
+</div>

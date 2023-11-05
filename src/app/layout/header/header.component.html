@@ -1,0 +1,131 @@
+
+
+<header [style.direction]="lang == 'ar' ? 'rtl' : 'ltr'">
+  <app-change-password #app_change_password></app-change-password>
+  <nav
+    class="navbar navbar-expand-lg"
+    style="background-color: var(--main-color)"
+  >
+    <div class="header-grid">
+      <div *ngIf="pageName !== '/home'" class="div1" [style.width.%]="10">
+        <button
+          type="button"
+          class="btn"
+          (click)="toggleShowSide()"
+        >
+          <i
+            class="fa-solid fa-bars light-icons"
+            style="font-size: 1.75rem !important"
+          ></i>
+        </button>
+      </div>
+      <div class="div2" [style.width.%]="pageName == '/home' ? 15 : 5">
+        <input
+          class="dropdown1"
+          type="checkbox"
+          id="dropdown1"
+          name="dropdown1"
+        />
+        <label class="for-dropdown1" for="dropdown1">
+          <i
+            class="fa fa-large fa-chevron-circle-down light-icons"
+            (click)="translate()"
+            [style]="
+              ty === false
+                ? 'transition: all 0.5s;'
+                : 'transform: rotate(180deg); transition: all 0.5s'
+            "
+            style="font-size: 1.75rem !important"
+            aria-hidden="true"
+          ></i>
+        </label>
+        <div #dropdownModules class="section-dropdown1 mt-2">
+          <ng-container *ngFor="let app of apps">
+            <ng-container *ngIf="app.title !== null">
+              <a (click)="redirect(app.link)"> {{ lang == 'en' ? app.title : app.title_ar }} </a>
+            </ng-container>
+          </ng-container>
+      </div>
+      </div>
+      <div
+        class="div3"
+        [style.width.%]="55"
+      >
+      <!-- pageName == '/home' ? 50 : 50 -->
+        <h5 class="fs-2r text-white">{{ headers_lables.title }}</h5>
+      </div>
+      <div class="div4" *ngIf="pageName === '/home'" [style.width.%]="17"  >
+        <div class="dropdown-div" *ngIf="2">
+          <div class="dropdown">
+            <button
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton1"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="fa fa-solid fa-language"></i>
+              <span class="span-show-hidden">&nbsp;{{ headers_lables.lang }}</span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li
+                class="dropdown-item"
+                style="cursor: pointer"
+                (click)="changeLang(headers_lables.langs)"
+              >
+                <a
+                  class="block text-center"
+                  style="color: #000; text-decoration: none"
+                >
+                  <span> {{ headers_lables.langs }}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="div5" [style.width.%]="pageName == '/home' ? 11 : 28">
+        <div class="dropdown-div">
+          <div class="dropdown">
+            <button
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton2"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="fa fa-solid fa-user"></i>
+              <span class="span-show-hidden">&nbsp; {{ username }}</span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li
+                class="dropdown-item"
+                style="cursor: pointer"
+                (click)="changePassword()"
+              >
+                <a
+                  class="block text-center"
+                  style="color: #000; text-decoration: none"
+                >
+                  <span>{{ headers_lables.changePassword }} <i class="fa-solid fa-unlock-keyhole"></i></span>
+                </a>
+              </li>
+              <li
+                class="dropdown-item"
+                style="cursor: pointer"
+                (click)="logout()"
+              >
+                <a
+                  class="block text-center"
+                  style="color: #000; text-decoration: none"
+                >
+                  <span>{{ headers_lables.logout }} <i class="fa-solid fa-right-from-bracket"></i></span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,14 @@
+<div class="paginator-container">
+    <p-breadcrumb class="max-w-full" [model]="items" [home]="home" (onItemClick)="clicked($event)"></p-breadcrumb>
+    <!-- <div class="header">
+        <button class="btn btn-back bg-main-color text-white" type="button" (click)="logIds()"> 	<span>&lt; Back</span> </button>
+        <div class="component-header"><span>Update Country EG </span></div>
+    </div> -->
+    <div class="navigation" *ngIf="size > 0">
+        <button class="custom-btn" type="button" [disabled]="current == 1" (click)="go_to_page(1)"> <span>&laquo;</span> </button>
+        <button class="custom-btn" type="button" [disabled]="current == 1" (click)="go_to_page(current - 1)"> <span>&lt;</span> </button>
+        <button class="custom-btn cancel-blur" disabled >[{{current}} / {{size}}]</button>
+        <button class="custom-btn" type="button" [disabled]="current == size" (click)="go_to_page(current + 1)"> <span>&gt;</span> </button>
+        <button class="custom-btn" type="button" [disabled]="current == size" (click)="go_to_page(size)"> <span>&raquo;</span> </button>
+    </div>
+</div>

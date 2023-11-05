@@ -1,0 +1,61 @@
+.login-body {
+  width: 100vw;
+  height: 100vh;
+  background-color: #dddddd;
+  // @extend .main-bg;
+}
+.main-bg {
+  background: var(--main-color) !important;
+}
+
+.login-cont {
+  margin-top: min(10rem, 250px);
+  width: 500px;
+}
+
+.remember-me-cont {
+  .form-label {
+    margin-left: 1rem;
+  }
+}
+
+::ng-deep {
+  .card-body label {
+    font-weight: 600;
+  }
+  body[lang="ar"] {
+    .card-body > form div {
+      label {
+        float: right;
+      }
+    }
+    .remember-me-cont,
+    .error-message {
+      display: flex;
+      flex-direction: row-reverse;
+      .form-label {
+        margin-right: 1rem;
+      }
+    }
+  }
+}
+
+input:focus,
+button:focus {
+  border: 1px solid var(--main-color) !important;
+  box-shadow: none !important;
+}
+
+.form-check-input:checked {
+  background-color: var(--main-color) !important;
+  border-color: var(--main-color) !important;
+}
+.remember-me-cont .form-check-input {
+  min-height: 1rem !important;
+}
+
+.card,
+.btn,
+input {
+  border-radius: 0 !important;
+}

@@ -1,0 +1,29 @@
+<aside
+*ngIf="pageName !== '/home'"
+  class="sidebar position-fixed h-100 aside"
+  [style]="
+    !isShowSide
+      ? lang == 'ar'
+        ? 'margin-right:-130px'
+        : 'margin-left:-130px'
+      : ''
+  "
+>
+<ng-container *ngFor="let module of modules">
+  <ng-container *ngIf="module.permision">
+  <div class="list-group list-group-flush">
+    <!-- (click)="navigate(module.routerLink)" -->
+    <a
+    (click)="navigate(module.routerLink)"
+    [routerLink]="module.routerLink"
+          routerLinkActive="active"
+          class="list-group-item list-group-item-action text-light d-flex flex-column align-items-center"
+          style="padding: 8px 2px; overflow: hidden; cursor: pointer;"
+        >
+          <i class="fa-solid mb-2 fs-8" [class]="'fa-'+module.iconName"></i>
+          <span style="text-align: center;">{{module.name}}</span>
+        </a>
+      </div>
+    </ng-container>
+  </ng-container>
+</aside>

@@ -1,0 +1,35 @@
+.none {
+  display: none !important;
+  opacity: 0 !important;
+}
+.modal-header .btn-close {
+  margin: 0 !important;
+}
+.popup {
+  position: absolute;
+  width: 60%;
+  transform: translate(-50%, 0);
+  cursor: move;
+}
+
+.modal-body{
+  cursor: default !important;
+}
+
+@media screen and (max-width: 992px) {
+  .popup {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 792px) {
+  .popup {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .popup {
+    width: 90%;
+  }
+}

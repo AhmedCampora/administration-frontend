@@ -1,0 +1,14 @@
+<main id="main" class="card-list">
+  <ng-container *ngFor="let module of modules">
+    <ng-container *ngIf="module.permision">
+      <a class="card" routerLink="{{ module.routerLink }}">
+        <img
+          alt="{{ module.name }}"
+          class="logos"
+          src="{{ module.src }}"
+        />
+        <p class="names">{{ module.name }}</p>
+      </a>
+    </ng-container>
+  </ng-container>
+</main>

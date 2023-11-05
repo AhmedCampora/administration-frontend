@@ -1,0 +1,169 @@
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 !important;
+  background-color: #f8f9fa;
+
+  .left-divs,
+  .right-divs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .left-divs {
+    align-content: flex-start;
+  }
+
+  .right-divs {
+    align-content: flex-end;
+  }
+
+  input {
+    height: 30px;
+    margin-bottom: 1px;
+  }
+}
+
+::ng-deep {
+  body[lang="ar"] {
+    .shared-table-width {
+      .p-dropdown-label {
+        margin: 0px 10px 0 -10px;
+      }
+    }
+  }
+
+  .p-speeddial-button.p-button.p-button-icon-only {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  .p-multiselect-label-container {
+    height: 34px;
+    margin-top: -5px;
+  }
+
+  .p-datatable .p-datatable-tbody > tr > td span {
+    font-weight: 500;
+    font-size: 13px !important;
+  }
+
+  .p-datatable.p-datatable-hoverable-rows
+    .p-datatable-tbody
+    > tr:not(.p-highlight):hover {
+    cursor: pointer;
+  }
+  .p-column-filter-row .p-column-filter-menu-button,
+  .p-column-filter-row .p-column-filter-clear-button {
+    margin-left: 0 !important;
+  }
+  .p-column-filter button:nth-child(3) {
+    display: none;
+  }
+  p-columnfilterformelement {
+    .p-inputtext {
+      min-width: 50px !important;
+    }
+  }
+}
+tr td i {
+  font-size: 1.3rem !important;
+  padding: 0 0.3rem;
+  cursor: pointer;
+}
+
+.box {
+  border: 1px solid;
+  position: relative;
+}
+
+.rtl {
+  direction: rtl;
+}
+
+.article {
+  display: none;
+}
+
+.hover-tr {
+  cursor: pointer;
+}
+
+.td-icons {
+  span {
+    margin: 1px;
+  }
+}
+/*
+  .td-icons{
+    span{
+      margin: 2px;
+      padding: 4px;
+      border: 1px solid rgb(36 36 36 / 25%);
+      border-radius: 50%;
+      background-color: #f5f3fd69;
+    }
+  }
+  */
+.yellow {
+  color: rgb(253, 194, 31);
+}
+.danger {
+  color: rgb(216, 19, 19);
+}
+.gray {
+  color: rgb(70, 70, 70);
+}
+.blue {
+  color: rgb(27, 49, 175);
+}
+.rtl {
+  direction: rtl;
+}
+.f-right {
+  text-align: right;
+}
+
+::ng-deep {
+  .p-checkbox {
+    margin: 0 0.5rem !important;
+  }
+  .p-datatable-wrapper {
+    border-bottom: 1px solid #dcdcdc;
+    min-height: 200px;
+  }
+  .table,
+  .p-datatable-sm,
+  .p-datatable-wrapper {
+    min-height: inherit !important;
+  }
+}
+
+::ng-deep {
+  body[lang="ar"] {
+    .p-multiselect-filter-icon {
+      right: calc(100% - 20px) !important;
+      left: 0.5rem;
+    }
+    thead > tr > th > div,
+    .p-datatable-tbody > tr > td {
+      text-align: right;
+    }
+    p-multiselect > div > p-overlay > div {
+      min-width: 180px !important;
+      right: 0px !important;
+    }
+    .p-overlay {
+      direction: rtl;
+      z-index: 1056 !important;
+      justify-content: start !important;
+      // left: unset !important;
+      // right: inherit;
+    }
+  }
+
+  .column-checkbox {
+    height: 1rem;
+    min-height: 10px !important;
+  }
+}
